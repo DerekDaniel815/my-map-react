@@ -1,4 +1,5 @@
 import type { Coordinates } from "../../hooks/maps.hooks";
+import "./MarkerCard.css";
 
 interface MarkerCardProps {
   index: number;

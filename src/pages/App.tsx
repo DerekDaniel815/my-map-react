@@ -51,52 +51,79 @@ const App = () => {
       const newMarkers = prev.filter((_, i) => i !== index);
       return newMarkers;
     });
-  }
+  };
 
   if (!isLoaded) return <p className="text-white">Cargando mapa...</p>;
   return (
-    <div className="container">
-      <h1>Mapa</h1>
-      {loading && <p>Cargando ubicacion...</p>}
-      {error && <p>{error}</p>}
+    <div className="app">
+      <header className="app__header">
+        <div>
+          <h1 className="app__title">Explora el mapa</h1>
+          <p className="app__subtitle">
+            Guarda tus lugares favoritos y vuelve a ellos cuando quieras.
+          </p>
+        </div>
+      </header>
 
-      {!loading && !error && coords ? (
-        <>
-          <p>Lat: {coords.lat}</p>
-          <p>Lng: {coords.lng}</p>
-        </>
-      ) : (
-        <>No hay coordenadas disponibles.</>
-      )}
+      <section className="app__controls">
+        <div className="app__status">
+          {loading && <p className="app__status-text">Cargando ubicación...</p>}
+          {error && (
+            <p className="app__status-text app__status-text--error">{error}</p>
+          )}
 
-      <button onClick={refresh}>Actualizar ubicación</button>
+          {!loading && !error && coords ? (
+            <div className="app__coords">
+              <span className="app__coords-label">Lat:</span>
+              <span className="app__coords-value">{coords.lat}</span>
+              <span className="app__coords-label">Lng:</span>
+              <span className="app__coords-value">{coords.lng}</span>
+            </div>
+          ) : (
+            <p className="app__status-text app__status-text--muted">
+              No hay coordenadas disponibles.
+            </p>
+          )}
+        </div>
 
-      <SearchBox onSelectPlace={handleSelectFromSearch} />
+        <div className="app__actions">
+          <button className="btn btn--primary" onClick={refresh}>
+            Actualizar ubicación
+          </button>
+        </div>
 
-      <div className="map-layout">
-        <aside className="marker-list">
-          <h2 className="marker-list-title">Lugares marcados</h2>
+        <div className="app__search">
+          <SearchBox onSelectPlace={handleSelectFromSearch} />
+        </div>
+      </section>
+
+      <section className="map-layout">
+        <aside className="map-layout__sidebar marker-list">
+          <h2 className="marker-list__title">Lugares marcados</h2>
 
           {markets.length === 0 ? (
-            <p className="marker-list-empty">
+            <p className="marker-list__empty">
               Aun no tienes lugares guardados.
             </p>
           ) : (
-            markets.map((m, index) => (
-              <MarkerCard
-                key={index}
-                index={index}
-                coords={m}
-                onRemove={() => handleRemoveMarker(index)}
-              />
-            ))
+            <ul className="marker-list__items">
+              {markets.map((m, index) => (
+                <li key={index} className="marker-list__item">
+                  <MarkerCard
+                    index={index}
+                    coords={m}
+                    onRemove={() => handleRemoveMarker(index)}
+                  />
+                </li>
+              ))}
+            </ul>
           )}
         </aside>
 
-        <div className="map-container">
+        <div className="map-layout__map map-container">
           <Map coords={center} markers={markets} />
         </div>
-      </div>
+      </section>
     </div>
   );
 };
