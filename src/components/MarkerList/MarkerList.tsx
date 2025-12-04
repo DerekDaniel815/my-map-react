@@ -52,7 +52,7 @@ const MarkerList = ({
   };
 
   return (
-    <aside className="map-layout__sidebar marker-list">
+    <aside className="marker-list">
       <h2 className="marker-list__title">Lugares marcados</h2>
 
       {markers.length === 0 ? (
