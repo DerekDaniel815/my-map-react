@@ -4,6 +4,7 @@ import { useGeolocation, type Coordinates } from "../hooks/maps.hooks";
 import { useEffect, useState } from "react";
 import SearchBox from "../components/searchBox/searchBox";
 import MarkerCard from "../components/MarkerCard/MarkerCard";
+import MarkerList from "../components/MarkerList/MarkerList";
 
 const App = () => {
   const { coords, loading, error, refresh } = useGeolocation();
@@ -53,6 +54,10 @@ const App = () => {
     });
   };
 
+  const handleReorderMarkers = (newOrder: Coordinates[]) => {
+    setMarkers(newOrder);
+  };
+
   if (!isLoaded) return <p className="text-white">Cargando mapa...</p>;
   return (
     <div className="app">
@@ -98,27 +103,11 @@ const App = () => {
       </section>
 
       <section className="map-layout">
-        <aside className="map-layout__sidebar marker-list">
-          <h2 className="marker-list__title">Lugares marcados</h2>
-
-          {markets.length === 0 ? (
-            <p className="marker-list__empty">
-              Aun no tienes lugares guardados.
-            </p>
-          ) : (
-            <ul className="marker-list__items">
-              {markets.map((m, index) => (
-                <li key={index} className="marker-list__item">
-                  <MarkerCard
-                    index={index}
-                    coords={m}
-                    onRemove={() => handleRemoveMarker(index)}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </aside>
+        <MarkerList
+          markers={markets}
+          onRemoveMarker={handleRemoveMarker}
+          onReorder={handleReorderMarkers}
+        />
 
         <div className="map-layout__map map-container">
           <Map coords={center} markers={markets} />
