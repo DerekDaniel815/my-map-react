@@ -1,15 +1,19 @@
 import { useJsApiLoader } from "@react-google-maps/api";
 import Map from "../components/Map/Map";
-import { useGeolocation, type Coordinates } from "../hooks/maps.hooks";
+import {
+  useDirections,
+  useGeolocation,
+  type Coordinates,
+} from "../hooks/maps.hooks";
 import { useEffect, useState } from "react";
 import SearchBox from "../components/searchBox/searchBox";
-import MarkerCard from "../components/MarkerCard/MarkerCard";
 import MarkerList from "../components/MarkerList/MarkerList";
 
 const App = () => {
   const { coords, loading, error, refresh } = useGeolocation();
   const [markets, setMarkers] = useState<Coordinates[]>([]);
   const [center, setCenter] = useState<Coordinates | undefined>(undefined);
+  const { directions, routeInfo } = useDirections(markets);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -68,6 +72,17 @@ const App = () => {
             Guarda tus lugares favoritos y vuelve a ellos cuando quieras.
           </p>
         </div>
+
+        {routeInfo && (
+          <div className="app__route-info">
+            <p>
+              Distancia total: {(routeInfo.distanceMeters / 1000).toFixed(2)} km
+            </p>
+            <p>
+              Tiempo estimado: {(routeInfo.durationSeconds / 60).toFixed(1)} min
+            </p>
+          </div>
+        )}
       </header>
 
       <section className="app__controls">
@@ -110,7 +125,7 @@ const App = () => {
         />
 
         <div className="map-layout__map map-container">
-          <Map coords={center} markers={markets} />
+          <Map coords={center} markers={markets} directions={directions}/>
         </div>
       </section>
     </div>

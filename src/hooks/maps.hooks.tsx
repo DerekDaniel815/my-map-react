@@ -37,7 +37,6 @@ export const useGeolocation = () => {
     );
   };
 
-  // ejecutar al montar
   useEffect(() => {
     getLocation();
   }, []);
@@ -47,5 +46,84 @@ export const useGeolocation = () => {
     loading,
     error,
     refresh: getLocation,
+  };
+};
+
+export interface RouteInfo {
+  distanceMeters: number;
+  durationSeconds: number;
+}
+
+export const useDirections = (markers: Coordinates[]) => {
+  const [directions, setDirections] =
+    useState<google.maps.DirectionsResult | null>(null);
+  const [routeInfo, setRouteInfo] = useState<RouteInfo | null>(null);
+
+  useEffect(() => {
+    if (!markers || markers.length < 2) {
+      setDirections(null);
+      setRouteInfo(null);
+      return;
+    }
+
+    const g = (window as any).google as typeof google | undefined;
+    if (!g) return;
+
+    const origin: Coordinates = {
+      lat: markers[0].lat,
+      lng: markers[0].lng,
+    };
+
+    const destination: Coordinates = {
+      lat: markers[markers.length - 1].lat,
+      lng: markers[markers.length - 1].lng,
+    };
+
+    const waypoints =
+      markers.length > 2
+        ? markers.slice(1, -1).map((m) => ({
+            location: { lat: m.lat, lng: m.lng },
+            stopover: true,
+          }))
+        : [];
+
+    const directionsService = new g.maps.DirectionsService();
+
+    directionsService.route(
+      {
+        origin,
+        destination,
+        waypoints,
+        travelMode: g.maps.TravelMode.DRIVING,
+        optimizeWaypoints: false,
+      },
+      (result, status) => {
+        if (status === g.maps.DirectionsStatus.OK && result) {
+          setDirections(result);
+
+          // calcular info básica de ruta distancia y tiempo usar mas adelante !!!!!!!!!
+          const legs = result.routes[0]?.legs ?? [];
+          const distanceMeters = legs.reduce(
+            (sum, leg) => sum + (leg.distance?.value ?? 0),
+            0
+          );
+          const durationSeconds = legs.reduce(
+            (sum, leg) => sum + (leg.duration?.value ?? 0),
+            0
+          );
+
+          setRouteInfo({ distanceMeters, durationSeconds });
+        } else {
+          console.error("Directions request failed:", status);
+          setDirections(null);
+          setRouteInfo(null);
+        }
+      }
+    );
+  }, [markers]);
+
+  return {
+    directions,
+    routeInfo,
   };
 };
