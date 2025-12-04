@@ -1,6 +1,7 @@
 import { Autocomplete } from "@react-google-maps/api";
 import { useState } from "react";
 import type { Coordinates } from "../../hooks/maps.hooks";
+import "./searchBox.scss";
 
 declare const google: any; // para que TS no moleste
 
@@ -36,17 +37,7 @@ const SearchBox = ({ onSelectPlace }: SearchBoxProps) => {
       <input
         type="text"
         placeholder="Buscar lugar (ej: Tottus, universidad, plaza...)"
-        style={{
-          width: "100%",
-          maxWidth: "700px",
-          padding: "8px 12px",
-          borderRadius: "8px",
-          border: "1px solid #ccc",
-          outline: "none",
-          fontSize: "14px",
-          marginBottom: "12px",
-          marginBlock: "16px",
-        }}
+        className="search-input"
       />
     </Autocomplete>
   );

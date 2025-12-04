@@ -2,7 +2,7 @@ import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import {
   defaultCenter, type Coordinates
 } from "../../hooks/maps.hooks";
-import "./Map.css";
+import "./Map.scss";
 interface MapProps {
   coords: Coordinates | undefined;
   markers: Coordinates[];

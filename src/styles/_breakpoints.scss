@@ -1,0 +1,30 @@
+// Breakpoints base
+$bp-xs: 480px;
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+// Mixin para max-width
+@mixin down-xs {
+  @media (max-width: #{$bp-xs}) {
+    @content;
+  }
+}
+
+@mixin down-sm {
+  @media (max-width: #{$bp-sm}) {
+    @content;
+  }
+}
+
+@mixin down-md {
+  @media (max-width: #{$bp-md}) {
+    @content;
+  }
+}
+
+@mixin down-lg {
+  @media (max-width: #{$bp-lg}) {
+    @content;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MarkerCard from "../MarkerCard/MarkerCard";
 import { type Coordinates } from "../../hooks/maps.hooks";
-import "./MarkerList.css";
+import "./MarkerList.scss";
 
 interface MarkerListProps {
   markers: Coordinates[];

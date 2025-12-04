@@ -65,69 +65,81 @@ const App = () => {
   if (!isLoaded) return <p className="text-white">Cargando mapa...</p>;
   return (
     <div className="app">
-      <header className="app__header">
-        <div>
-          <h1 className="app__title">Explora el mapa</h1>
-          <p className="app__subtitle">
-            Guarda tus lugares favoritos y vuelve a ellos cuando quieras.
-          </p>
-        </div>
+      {/* Mapa a pantalla completa de fondo */}
+      <div className="app__map-bg">
+        <Map coords={center} markers={markets} directions={directions} />
+      </div>
 
-        {routeInfo && (
-          <div className="app__route-info">
-            <p>
-              Distancia total: {(routeInfo.distanceMeters / 1000).toFixed(2)} km
-            </p>
-            <p>
-              Tiempo estimado: {(routeInfo.durationSeconds / 60).toFixed(1)} min
+      {/* Overlay con toda la UI */}
+      <div className="app__overlay">
+        <header className="app__header">
+          <div>
+            <h1 className="app__title">Explora el mapa</h1>
+            <p className="app__subtitle">
+              Guarda tus lugares favoritos y vuelve a ellos cuando quieras.
             </p>
           </div>
-        )}
-      </header>
 
-      <section className="app__controls">
-        <div className="app__status">
-          {loading && <p className="app__status-text">Cargando ubicación...</p>}
-          {error && (
-            <p className="app__status-text app__status-text--error">{error}</p>
-          )}
-
-          {!loading && !error && coords ? (
-            <div className="app__coords">
-              <span className="app__coords-label">Lat:</span>
-              <span className="app__coords-value">{coords.lat}</span>
-              <span className="app__coords-label">Lng:</span>
-              <span className="app__coords-value">{coords.lng}</span>
+          {routeInfo && (
+            <div className="app__route-info">
+              <p>
+                Distancia total: {(routeInfo.distanceMeters / 1000).toFixed(2)}{" "}
+                km
+              </p>
+              <p>
+                Tiempo estimado: {(routeInfo.durationSeconds / 60).toFixed(1)}{" "}
+                min
+              </p>
             </div>
-          ) : (
-            <p className="app__status-text app__status-text--muted">
-              No hay coordenadas disponibles.
-            </p>
           )}
-        </div>
+        </header>
 
-        <div className="app__actions">
-          <button className="btn btn--primary" onClick={refresh}>
-            Actualizar ubicación
-          </button>
-        </div>
+        <section className="app__controls">
+          <div className="app__status">
+            {loading && (
+              <p className="app__status-text">Cargando ubicación...</p>
+            )}
+            {error && (
+              <p className="app__status-text app__status-text--error">
+                {error}
+              </p>
+            )}
 
-        <div className="app__search">
-          <SearchBox onSelectPlace={handleSelectFromSearch} />
-        </div>
-      </section>
+            {!loading && !error && coords ? (
+              <div className="app__coords">
+                <span className="app__coords-label">Lat:</span>
+                <span className="app__coords-value">{coords.lat}</span>
+                <span className="app__coords-label">Lng:</span>
+                <span className="app__coords-value">{coords.lng}</span>
+              </div>
+            ) : (
+              <p className="app__status-text app__status-text--muted">
+                No hay coordenadas disponibles.
+              </p>
+            )}
+          </div>
 
-      <section className="map-layout">
-        <MarkerList
-          markers={markets}
-          onRemoveMarker={handleRemoveMarker}
-          onReorder={handleReorderMarkers}
-        />
+          <div className="app__actions">
+            <button className="btn btn--primary" onClick={refresh}>
+              Actualizar ubicación
+            </button>
+          </div>
 
-        <div className="map-layout__map map-container">
-          <Map coords={center} markers={markets} directions={directions}/>
-        </div>
-      </section>
+          <div className="app__search">
+            <SearchBox onSelectPlace={handleSelectFromSearch} />
+          </div>
+        </section>
+
+        <section className="map-layout">
+          <div className="map-layout__sidebar">
+            <MarkerList
+              markers={markets}
+              onRemoveMarker={handleRemoveMarker}
+              onReorder={handleReorderMarkers}
+            />
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

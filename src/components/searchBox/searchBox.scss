@@ -1,0 +1,19 @@
+.search-input {
+  width: 100%;
+  max-width: 745px;
+  border-radius: 8px;
+  border: 1px solid #4b5563;
+  font-size: 14px;
+  outline: none;
+  background: #020617;
+  color: #f9fafb;
+  height: 32px;
+  text-indent: 8px;
+
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    border-color: #4ade80;
+    box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.4);
+  }
+}
