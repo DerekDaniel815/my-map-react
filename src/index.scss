@@ -281,8 +281,6 @@ body {
   @include down-md {
     flex-direction: column;
   }
-
-  position: relative;
 }
 
 .map-layout__sidebar {
@@ -299,29 +297,17 @@ body {
   overflow: hidden;
 
   @include down-md {
-    width: 100%;
-    max-height: none;
-  }
-}
-
-@include down-md {
-  .map-layout__sidebar {
     position: absolute;
     left: 12px;
     right: 12px;
-    top: 45vh;
+    top: 42vh;
     width: auto;
-    max-height: 27vh;
+    max-height: 30vh;
   }
-}
 
-@include down-sm {
-  .map-layout__sidebar {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    top: 38vh;
-    width: auto;
-    max-height: 27vh;
+  @include down-sm {
+    top: auto;         // 👈 cancela el top
+    bottom: 12px;      // 👈 pegado al borde inferior
+    max-height: 35vh;  // un poquito mas alto si quieres
   }
 }
