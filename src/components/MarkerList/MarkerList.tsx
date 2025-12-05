@@ -51,12 +51,21 @@ const MarkerList = ({
     setDragOverIndex(null);
   };
 
-  return (
-    <aside className="marker-list">
-      <h2 className="marker-list__title">Lugares marcados</h2>
+  const [isOpen, setIsOpen] = useState(true);
 
+  return (
+    <aside className={isOpen ? "marker-list" : "marker-list__close"}>
+      <button
+        className="marker-list__toggle"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <h2 className="marker-list__title">Lugares marcados</h2>
+        <span className="marker-list__toggle-icon">{isOpen ? "▼" : "▲"}</span>
+      </button>
       {markers.length === 0 ? (
-        <p className="marker-list__empty">Aun no tienes lugares seleccionados.</p>
+        <p className="marker-list__empty">
+          Aun no tienes lugares seleccionados.
+        </p>
       ) : (
         <ul className="marker-list__items">
           {markers.map((m, index) => {

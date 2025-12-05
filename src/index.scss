@@ -302,12 +302,32 @@ body {
     right: 12px;
     top: calc(78dvh);
     width: auto;
-    max-height: 30dvh;
   }
 
   @include down-sm {
-    top: auto;         // 👈 cancela el top
-    bottom: 22px;      // 👈 pegado al borde inferior
-    max-height: 35dvh;  // un poquito mas alto si quieres
+    top: auto;
+    bottom: 27px;
   }
+}
+
+.marker-list__toggle {
+  width: 100%;
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 6px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.marker-list__toggle-icon {
+  font-size: 18px;
+  color: #cbd5e1;
+  transition: transform 0.2s ease;
+}
+
+.marker-list__toggle:hover .marker-list__toggle-icon {
+  color: #fff;
 }

@@ -1,3 +1,4 @@
+@use "./../../styles/breakpoints" as *;
 /* ========== MARKER LIST (BEM) ========== */
 
 .marker-list {
@@ -9,6 +10,33 @@
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
   overflow-y: auto;
   box-sizing: border-box;
+
+  @include down-md {
+    max-height: 35dvh;
+  }
+
+  @include down-sm {
+    max-height: 30dvh;
+  }
+}
+
+.marker-list__close {
+  padding: 12px;
+  border-radius: 16px;
+  background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #e5e7eb;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+  overflow-y: none;
+  box-sizing: border-box;
+
+  @include down-md {
+    max-height: 13dvh;
+  }
+
+  @include down-sm {
+    max-height: 6dvh;
+  }
 }
 
 .marker-list__title {
