@@ -5,14 +5,14 @@ import {
   useGeolocation,
   type Coordinates,
 } from "../hooks/maps.hooks";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBox from "../components/searchBox/searchBox";
 import MarkerList, {
   type MarkerCardProps,
 } from "../components/MarkerList/MarkerList";
 
 const App = () => {
-  const { coords, loading, error, refresh } = useGeolocation();
+  const { coords, refresh } = useGeolocation();
   const [markers, setMarkers] = useState<MarkerCardProps[]>([]);
   const [center, setCenter] = useState<Coordinates | undefined>(undefined);
   const { directions, routeInfo } = useDirections(markers);
@@ -71,7 +71,7 @@ const App = () => {
   const formatMarkerCarToCoords = (
     markers: MarkerCardProps[]
   ): Coordinates[] => {
-    return markers.map((m, i) => {
+    return markers.map((m) => {
       return { ...m.coords };
     });
   };

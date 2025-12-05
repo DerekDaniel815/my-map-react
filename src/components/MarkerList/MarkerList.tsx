@@ -92,7 +92,6 @@ const MarkerList = ({
                 onDragEnd={handleDragEnd}
               >
                 <MarkerCard
-                  index={index}
                   markerCard={m}
                   onRemove={() => onRemoveMarker(index)}
                 />

@@ -2,12 +2,11 @@ import type { MarkerCardProps } from "../MarkerList/MarkerList";
 import "./MarkerCard.scss";
 
 interface MarkerPropsCard {
-  index: number;
   markerCard: MarkerCardProps;
   onRemove: () => void;
 }
 
-const MarkerCard = ({ index, markerCard, onRemove }: MarkerPropsCard) => {
+const MarkerCard = ({ markerCard, onRemove }: MarkerPropsCard) => {
   return (
     <div className="marker-card">
       <div className="marker-card-header">
