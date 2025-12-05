@@ -300,14 +300,14 @@ body {
     position: absolute;
     left: 12px;
     right: 12px;
-    top: 68vh;
+    top: 77vh;
     width: auto;
     max-height: 30vh;
   }
 
   @include down-sm {
     top: auto;         // 👈 cancela el top
-    bottom: 12px;      // 👈 pegado al borde inferior
+    bottom: 22px;      // 👈 pegado al borde inferior
     max-height: 35vh;  // un poquito mas alto si quieres
   }
 }
