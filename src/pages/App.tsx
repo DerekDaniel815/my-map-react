@@ -95,34 +95,36 @@ const App = () => {
         </header>
 
         <section className="app__controls">
-          <div className="app__status">
-            {loading && (
-              <p className="app__status-text">Cargando ubicación...</p>
-            )}
-            {error && (
-              <p className="app__status-text app__status-text--error">
-                {error}
-              </p>
-            )}
+          <div className="app__status-actions">
+            <div className="app__status">
+              {loading && (
+                <p className="app__status-text">Cargando ubicación...</p>
+              )}
+              {error && (
+                <p className="app__status-text app__status-text--error">
+                  {error}
+                </p>
+              )}
 
-            {!loading && !error && coords ? (
-              <div className="app__coords">
-                <span className="app__coords-label">Lat:</span>
-                <span className="app__coords-value">{coords.lat}</span>
-                <span className="app__coords-label">Lng:</span>
-                <span className="app__coords-value">{coords.lng}</span>
-              </div>
-            ) : (
-              <p className="app__status-text app__status-text--muted">
-                No hay coordenadas disponibles.
-              </p>
-            )}
-          </div>
+              {!loading && !error && coords ? (
+                <div className="app__coords">
+                  <span className="app__coords-label">Lat:</span>
+                  <span className="app__coords-value">{coords.lat}</span>
+                  <span className="app__coords-label">Lng:</span>
+                  <span className="app__coords-value">{coords.lng}</span>
+                </div>
+              ) : (
+                <p className="app__status-text app__status-text--muted">
+                  No hay coordenadas disponibles.
+                </p>
+              )}
+            </div>
 
-          <div className="app__actions">
-            <button className="btn btn--primary" onClick={refresh}>
-              Actualizar ubicación
-            </button>
+            <div className="app__actions">
+              <button className="btn btn--primary" onClick={refresh}>
+                Actualizar ubicación
+              </button>
+            </div>
           </div>
 
           <div className="app__search">

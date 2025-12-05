@@ -129,6 +129,16 @@ body {
 
   @include down-sm {
     text-align: left;
+    font-size: 12px;
+    margin-top: 4px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    p {
+      margin: 0;
+    }
   }
 }
 
@@ -160,15 +170,26 @@ body {
   }
 }
 
+.app__status-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  @include down-sm {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
 .app__status {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  order: 1;
 
   @include down-sm {
-    order: 2;
-    width: 100%;
+    width: auto;
+    flex: 1;
+    min-width: 0;
   }
 }
 
@@ -195,6 +216,9 @@ body {
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(148, 163, 184, 0.3);
   font-size: 12px;
+  @include down-md {
+    border-radius: 13px;
+  }
 }
 
 .app__coords-label {
@@ -208,12 +232,10 @@ body {
 .app__actions {
   display: flex;
   gap: 8px;
-  order: 2;
 
   @include down-sm {
-    order: 3;
-    width: 100%;
-    justify-content: stretch;
+    width: auto;
+    flex-shrink: 0;
   }
 }
 
@@ -221,7 +243,6 @@ body {
   flex: 1;
   min-width: 220px;
   display: block;
-  order: 3;
 
   @include down-md {
     width: 100%;
@@ -229,7 +250,6 @@ body {
   }
 
   @include down-sm {
-    order: 1;
     width: 100%;
   }
 }
