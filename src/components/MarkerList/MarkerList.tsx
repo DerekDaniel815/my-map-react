@@ -54,7 +54,7 @@ const MarkerList = ({
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <aside className={isOpen ? "marker-list" : "marker-list__close"}>
+    <aside className={isOpen ? "marker-list" : "marker-list marker-list__close"}>
       <button
         className="marker-list__toggle"
         onClick={() => setIsOpen(!isOpen)}

@@ -21,22 +21,40 @@
 }
 
 .marker-list__close {
-  padding: 12px;
+  padding: 8px 12px;
   border-radius: 16px;
   background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
   border: 1px solid rgba(148, 163, 184, 0.3);
   color: #e5e7eb;
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
-  overflow-y: none;
   box-sizing: border-box;
 
-  @include down-md {
-    max-height: 13dvh;
-  }
+  max-height: 48px;
+  min-height: 48px;
+  overflow: hidden;
+}
 
-  @include down-sm {
-    max-height: 6dvh;
-  }
+.marker-list__toggle {
+  width: 100%;
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.marker-list__toggle-icon {
+  font-size: 18px;
+  color: #cbd5e1;
+  transition: transform 0.2s ease;
+}
+
+.marker-list__toggle:hover .marker-list__toggle-icon {
+  color: #fff;
 }
 
 .marker-list__title {
