@@ -301,7 +301,7 @@ body {
     position: absolute;
     left: 12px;
     right: 12px;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 46px);
+    bottom: calc(env(safe-area-inset-bottom, 8px) + 62px);
     width: auto;
     max-height: 40dvh;
   }
