@@ -5,15 +5,17 @@ import {
   useGeolocation,
   type Coordinates,
 } from "../hooks/maps.hooks";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import SearchBox from "../components/searchBox/searchBox";
-import MarkerList from "../components/MarkerList/MarkerList";
+import MarkerList, {
+  type MarkerCardProps,
+} from "../components/MarkerList/MarkerList";
 
 const App = () => {
   const { coords, loading, error, refresh } = useGeolocation();
-  const [markets, setMarkers] = useState<Coordinates[]>([]);
+  const [markers, setMarkers] = useState<MarkerCardProps[]>([]);
   const [center, setCenter] = useState<Coordinates | undefined>(undefined);
-  const { directions, routeInfo } = useDirections(markets);
+  const { directions, routeInfo } = useDirections(markers);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -24,18 +26,22 @@ const App = () => {
   useEffect(() => {
     if (coords) {
       setCenter(coords);
-      setMarkers((prev) => (prev.length === 0 ? [coords] : prev));
+      setMarkers((prev) =>
+        prev.length === 0 ? [{ name: "Mi ubicación", coords }] : prev
+      );
     }
   }, [coords]);
 
-  const addPosition = (newPos: Coordinates, setAsCenter = true) => {
+  const addPosition = (newPos: MarkerCardProps, setAsCenter = true) => {
     setMarkers((prev) => {
       if (prev.length === 0) return [newPos];
 
       const last = prev[prev.length - 1];
 
       // validacion para no duplicar
-      const isSame = last.lat === newPos.lat && last.lng === newPos.lng;
+      const isSame =
+        last.coords.lat === newPos.coords.lat &&
+        last.coords.lng === newPos.coords.lng;
 
       if (isSame) return prev; // no agregar
 
@@ -43,11 +49,11 @@ const App = () => {
     });
 
     if (setAsCenter) {
-      setCenter(newPos);
+      setCenter(newPos.coords);
     }
   };
 
-  const handleSelectFromSearch = (newPos: Coordinates) => {
+  const handleSelectFromSearch = (newPos: MarkerCardProps) => {
     addPosition(newPos, true);
   };
 
@@ -58,8 +64,16 @@ const App = () => {
     });
   };
 
-  const handleReorderMarkers = (newOrder: Coordinates[]) => {
+  const handleReorderMarkers = (newOrder: MarkerCardProps[]) => {
     setMarkers(newOrder);
+  };
+
+  const formatMarkerCarToCoords = (
+    markers: MarkerCardProps[]
+  ): Coordinates[] => {
+    return markers.map((m, i) => {
+      return { ...m.coords };
+    });
   };
 
   if (!isLoaded) return <p className="text-white">Cargando mapa...</p>;
@@ -67,7 +81,11 @@ const App = () => {
     <div className="app">
       {/* Mapa a pantalla completa de fondo */}
       <div className="app__map-bg">
-        <Map coords={center} markers={markets} directions={directions} />
+        <Map
+          coords={center}
+          markers={formatMarkerCarToCoords(markers)}
+          directions={directions}
+        />
       </div>
 
       {/* Overlay con toda la UI */}
@@ -95,47 +113,20 @@ const App = () => {
         </header>
 
         <section className="app__controls">
-          <div className="app__status-actions">
-            <div className="app__status">
-              {loading && (
-                <p className="app__status-text">Cargando ubicación...</p>
-              )}
-              {error && (
-                <p className="app__status-text app__status-text--error">
-                  {error}
-                </p>
-              )}
-
-              {!loading && !error && coords ? (
-                <div className="app__coords">
-                  <span className="app__coords-label">Lat:</span>
-                  <span className="app__coords-value">{coords.lat}</span>
-                  <span className="app__coords-label">Lng:</span>
-                  <span className="app__coords-value">{coords.lng}</span>
-                </div>
-              ) : (
-                <p className="app__status-text app__status-text--muted">
-                  No hay coordenadas disponibles.
-                </p>
-              )}
-            </div>
-
-            <div className="app__actions">
-              <button className="btn btn--primary" onClick={refresh}>
-                Actualizar ubicación
-              </button>
-            </div>
-          </div>
-
           <div className="app__search">
             <SearchBox onSelectPlace={handleSelectFromSearch} />
+          </div>
+          <div className="app__status-actions">
+            <button className="btn btn--primary" onClick={refresh}>
+              Mi ubicación
+            </button>
           </div>
         </section>
 
         <section className="map-layout">
           <div className="map-layout__sidebar">
             <MarkerList
-              markers={markets}
+              markerCards={markers}
               onRemoveMarker={handleRemoveMarker}
               onReorder={handleReorderMarkers}
             />

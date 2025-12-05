@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import type { MarkerCardProps } from "../components/MarkerList/MarkerList";
 
 export interface Coordinates {
   lat: number;
@@ -54,7 +55,7 @@ export interface RouteInfo {
   durationSeconds: number;
 }
 
-export const useDirections = (markers: Coordinates[]) => {
+export const useDirections = (markers: MarkerCardProps[]) => {
   const [directions, setDirections] =
     useState<google.maps.DirectionsResult | null>(null);
   const [routeInfo, setRouteInfo] = useState<RouteInfo | null>(null);
@@ -70,19 +71,19 @@ export const useDirections = (markers: Coordinates[]) => {
     if (!g) return;
 
     const origin: Coordinates = {
-      lat: markers[0].lat,
-      lng: markers[0].lng,
+      lat: markers[0].coords.lat,
+      lng: markers[0].coords.lng,
     };
 
     const destination: Coordinates = {
-      lat: markers[markers.length - 1].lat,
-      lng: markers[markers.length - 1].lng,
+      lat: markers[markers.length - 1].coords.lat,
+      lng: markers[markers.length - 1].coords.lng,
     };
 
     const waypoints =
       markers.length > 2
         ? markers.slice(1, -1).map((m) => ({
-            location: { lat: m.lat, lng: m.lng },
+            location: { lat: m.coords.lat, lng: m.coords.lng },
             stopover: true,
           }))
         : [];

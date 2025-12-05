@@ -181,64 +181,6 @@ body {
   }
 }
 
-.app__status {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  @include down-sm {
-    width: auto;
-    flex: 1;
-    min-width: 0;
-  }
-}
-
-.app__status-text {
-  margin: 0;
-  font-size: 14px;
-}
-
-.app__status-text--error {
-  color: #f87171;
-}
-
-.app__status-text--muted {
-  color: #9ca3af;
-}
-
-.app__coords {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  font-size: 12px;
-  @include down-md {
-    border-radius: 13px;
-  }
-}
-
-.app__coords-label {
-  color: #9ca3af;
-}
-
-.app__coords-value {
-  font-weight: 600;
-}
-
-.app__actions {
-  display: flex;
-  gap: 8px;
-
-  @include down-sm {
-    width: auto;
-    flex-shrink: 0;
-  }
-}
-
 .app__search {
   flex: 1;
   min-width: 220px;

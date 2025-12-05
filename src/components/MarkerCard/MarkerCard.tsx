@@ -1,17 +1,17 @@
-import type { Coordinates } from "../../hooks/maps.hooks";
+import type { MarkerCardProps } from "../MarkerList/MarkerList";
 import "./MarkerCard.scss";
 
-interface MarkerCardProps {
+interface MarkerPropsCard {
   index: number;
-  coords: Coordinates;
+  markerCard: MarkerCardProps;
   onRemove: () => void;
 }
 
-const MarkerCard = ({ index, coords, onRemove }: MarkerCardProps) => {
+const MarkerCard = ({ index, markerCard, onRemove }: MarkerPropsCard) => {
   return (
     <div className="marker-card">
       <div className="marker-card-header">
-        <span className="marker-card-title">Lugar #{index + 1}</span>
+        <span className="marker-card-title">{markerCard.name}</span>
         <button
           type="button"
           className="marker-card-close"
@@ -23,8 +23,8 @@ const MarkerCard = ({ index, coords, onRemove }: MarkerCardProps) => {
       </div>
 
       <p className="marker-card-coords">
-        <span>Lat: {coords.lat.toFixed(5)}</span>
-        <span>Lng: {coords.lng.toFixed(5)}</span>
+        <span>Lat: {markerCard.coords.lat.toFixed(5)}</span>
+        <span>Lng: {markerCard.coords.lng.toFixed(5)}</span>
       </p>
     </div>
   );

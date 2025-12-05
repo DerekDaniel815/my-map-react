@@ -2,11 +2,12 @@ import { Autocomplete } from "@react-google-maps/api";
 import { useState } from "react";
 import type { Coordinates } from "../../hooks/maps.hooks";
 import "./searchBox.scss";
+import type { MarkerCardProps } from "../MarkerList/MarkerList";
 
 declare const google: any; // para que TS no moleste
 
 interface SearchBoxProps {
-  onSelectPlace: (coords: Coordinates) => void;
+  onSelectPlace: (coords: MarkerCardProps) => void;
 }
 
 const SearchBox = ({ onSelectPlace }: SearchBoxProps) => {
@@ -21,7 +22,8 @@ const SearchBox = ({ onSelectPlace }: SearchBoxProps) => {
     if (!autocomplete) return;
 
     const place = autocomplete.getPlace();
-    console.log("Lugar seleccionado:", place);
+    const photos = place.photos ?? [];
+    console.log("Lugar seleccionado:", photos[0].getUrl());
     if (!place.geometry || !place.geometry.location) return;
 
     const coords: Coordinates = {
@@ -29,7 +31,14 @@ const SearchBox = ({ onSelectPlace }: SearchBoxProps) => {
       lng: place.geometry.location.lng(),
     };
 
-    onSelectPlace(coords);
+    const name = place.vicinity || "Lugar sin nombre";
+
+    const coordsWithName: MarkerCardProps = {
+      name,
+      coords,
+    };
+
+    onSelectPlace(coordsWithName);
   };
 
   return (

@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import MarkerCard from "../MarkerCard/MarkerCard";
 import { type Coordinates } from "../../hooks/maps.hooks";
 import "./MarkerList.scss";
+export interface MarkerCardProps {
+  name: string;
+  imageUrl?: string;
+  coords: Coordinates;
+}
 
 interface MarkerListProps {
-  markers: Coordinates[];
+  markerCards: MarkerCardProps[];
   onRemoveMarker: (index: number) => void;
-  onReorder: (newOrder: Coordinates[]) => void;
+  onReorder: (newOrder: MarkerCardProps[]) => void;
 }
 
 const MarkerList = ({
-  markers,
+  markerCards,
   onRemoveMarker,
   onReorder,
 }: MarkerListProps) => {
@@ -36,7 +41,7 @@ const MarkerList = ({
       return;
     }
 
-    const updated = [...markers];
+    const updated = [...markerCards];
     const [moved] = updated.splice(draggedIndex, 1);
     updated.splice(index, 0, moved);
 
@@ -62,13 +67,13 @@ const MarkerList = ({
         <h2 className="marker-list__title">Lugares marcados</h2>
         <span className="marker-list__toggle-icon">{isOpen ? "▼" : "▲"}</span>
       </button>
-      {markers.length === 0 ? (
+      {markerCards.length === 0 ? (
         <p className="marker-list__empty">
           Aun no tienes lugares seleccionados.
         </p>
       ) : (
         <ul className="marker-list__items">
-          {markers.map((m, index) => {
+          {markerCards.map((m, index) => {
             const isDragging = index === draggedIndex;
             const isDragOver = index === dragOverIndex;
 
@@ -88,7 +93,7 @@ const MarkerList = ({
               >
                 <MarkerCard
                   index={index}
-                  coords={m}
+                  markerCard={m}
                   onRemove={() => onRemoveMarker(index)}
                 />
               </li>
